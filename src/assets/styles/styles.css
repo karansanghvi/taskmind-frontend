@@ -1,0 +1,273 @@
+body {
+    background-color: #181818;
+    font-family: "Poppins", sans-serif;
+}
+
+/* header */
+header {
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    padding: 0 2rem;
+    background-color: #181818;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    margin: 0 1rem;
+	color: white;
+    font-weight: 600;
+	text-decoration: none;
+    font-size: 40px;
+}
+
+nav {
+	margin-left: auto; /* Pushes the nav to the right */
+}
+
+nav .link {
+	margin: 0 1rem;
+	color: white;
+    font-weight: 600;
+	text-decoration: none;
+    font-size: 26px;
+}
+
+header .nav-btn {
+	padding: 5px;
+	cursor: pointer;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: white;
+	visibility: hidden;
+	opacity: 0;
+	font-size: 1.8rem;
+}
+
+.login {
+    background-color: #4F75FF;
+    border-radius: 20px;
+    font-size: 26px;
+    font-weight: 700;
+    width: 200px;
+    padding: 5px; 
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    color: white;
+}
+
+header div,
+nav {
+	display: flex;
+	align-items: right;
+}
+
+@media only screen and (max-width: 1024px) {
+	header .nav-btn {
+		visibility: visible;
+		opacity: 1;
+	}
+
+	header nav {
+		position: fixed;
+		top: -100vh;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 1.5rem;
+		background-color: black;
+		transition: 1s;
+	}
+
+	header .responsive_nav {
+		transform: translateY(100vh);
+	}
+
+	nav .nav-close-btn {
+		position: absolute;
+		top: 2rem;
+		right: 2rem;
+        color: white;
+	}
+
+	nav .link {
+		font-size: 1.5rem;
+        color: white;
+	}
+}
+
+/* hero banner */
+.hero-banner h1 {
+    font-size: 64px;
+    font-weight: 700;
+    color: white;
+}
+
+.hero-banner .get-started-button {
+    background-color: #4F75FF;
+    border-radius: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    width: 390px;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+/* features section */
+.features-section h1 {
+    font-size: 64px;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+}
+
+.features-section p {
+    font-size: 24px;
+    color: white;
+    text-align: center;
+}
+
+.features-card {
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px); 
+    border-radius: 15px; 
+    padding: 20px; 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    color: white; 
+    width: 100%; 
+    margin: 20px auto; 
+    cursor: pointer;
+}
+
+.features-card .card-title {
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #4F75FF;
+}
+
+.features-card .card-description {
+    font-size: 20px;
+}
+
+/* login page */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-section {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 100%;
+    max-width: 500px; 
+    margin: 0 auto; 
+    cursor: pointer;
+}
+
+.login-section h1 {
+    text-align: center;
+    font-size: 50px;
+    color: #4F75FF;
+    font-weight: 700;
+}
+
+.login-section p {
+    font-size: 24px;
+    font-weight: 400;
+    color: white;
+}
+
+.login-section .text-box {
+    padding: 10px;
+    border-radius: 5px;
+    width: 440px;
+}
+
+.login-section .login-button {
+    background-color: #4F75FF;
+    border-radius: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    width: 440px;
+    padding: 5px;
+    text-align: center;
+    color: white;
+}
+
+.login-section .signup {
+    color: #4F75FF;
+}
+
+/* footer */
+.footer-section {
+    background-color: #4F75FF;
+}
+
+.footer-section .footer-text {
+    font-size: 30px;
+    font-weight: 600;
+    color: white;
+}
+
+/* media queries */
+@media (max-width: 480px) {
+    .hero-banner h1 {
+        font-size: 40px;
+    }
+
+    .hero-banner .get-started-button {
+        font-size: 20px;
+        width: 100%; 
+        padding: 12px; 
+    }
+
+    .features-section h1 {
+        font-size: 36px; 
+    }
+
+    .features-section p {
+        font-size: 18px; 
+    }
+
+    .features-card {
+        padding: 15px; 
+        width: 90%; 
+    }
+
+    .features-card .card-title {
+        font-size: 20px; 
+    }
+
+    .features-card .card-description {
+        font-size: 16px; 
+    }
+
+    .footer-section {
+        padding: 15px;
+    }
+
+    .footer-section .footer-text {
+        font-size: 20px;
+        font-weight: 500;
+    }
+}
