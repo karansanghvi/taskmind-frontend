@@ -21,6 +21,12 @@ function Home() {
     }
   };
 
+  const fullName = localStorage.getItem('fullName');
+
+  const handleLogout = () => {
+    localStorage.removeItem('fullName');
+  }
+
   return (
     <>
       <header>
@@ -28,9 +34,16 @@ function Home() {
         <nav ref={navRef}>
           <button onClick={() => scrollToSection('home')} className="link">Home</button>
           <button onClick={() => scrollToSection('features')} className="link">Features</button>
-          <button>
-            <Link to="/login" className="login">Login</Link>
-          </button>
+          {fullName ? (
+            <>
+              <span className="welcome-message">Welcome, {fullName}</span>
+              <button onClick={handleLogout} className="logout">Logout</button>
+            </>
+          ) : (
+            <button>
+              <Link to="/login" className="login">Login</Link>
+            </button>
+          )}
           <button className="nav-btn nav-close-btn" onClick={showNavbar}>
             <FaTimes />
           </button>

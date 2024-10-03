@@ -5,11 +5,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../assets/styles/styles.css';  
 import Footer from "../components/Footer";
+import { useUser } from '../context/UserContext'; 
 
 function Login() {
-
   const navRef = useRef();
   const navigate = useNavigate();
+  const { setUser } = useUser(); 
 
   const [formData, setFormData] = useState({
     email: '',
@@ -45,12 +46,12 @@ function Login() {
     }, 100);
   };
 
-  // input validation
+  // Input validation
   const validate = () => {
     let valid = true;
     let newErrors = {};
 
-    if(!formData.email.trim()) {
+    if (!formData.email.trim()) {
       newErrors.email = 'Email Address Is Required';
       valid = false;
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
@@ -58,14 +59,14 @@ function Login() {
       valid = false;
     }
 
-    if(formData.password.length < 6) {
+    if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
       valid = false;
     }
 
     setErrors(newErrors);
 
-    // trigger notifications
+    // Trigger notifications
     if (newErrors.email) {
       toast.error(newErrors.email);
     }
@@ -77,7 +78,7 @@ function Login() {
     return valid;
   };
 
-  // handle input change
+  // Handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -86,36 +87,49 @@ function Login() {
     }));
   };
 
-  // handle form submit
+  // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (validate()) {
-      // toast.success('Account Created Successfully!!');
       try {
         const response = await fetch('http://localhost:5000/api/login', {
-          method:'POST',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(formData),
         });
-
+  
         const data = await response.json();
-
+  
         if (response.ok) {
+          // Store user details and set in context
+          localStorage.setItem('fullName', data.fullName);
+          localStorage.setItem('email', data.email); // Store email if needed
+  
+          // Set user details in context
+          setUser({
+            fullName: data.fullName,
+            email: data.email,
+          });
+  
           toast.success('Logged In Successfully!');
+          
+          // Redirect to the profile page after a short delay
           setTimeout(() => {
-            navigate('/');
+            navigate('/profile');
           }, 2000);
         } else {
           toast.error(data.error || 'Something Went Wrong');
         }
       } catch (error) {
         toast.error('Failed to connect to the server');
+        console.error('Login failed:', error);
       }
     }
   };
-
+    
   return (
     <>
       <header>
