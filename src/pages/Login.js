@@ -87,10 +87,32 @@ function Login() {
   };
 
   // handle form submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      toast.success('Account Created Successfully!!');
+      // toast.success('Account Created Successfully!!');
+      try {
+        const response = await fetch('http://localhost:5000/api/login', {
+          method:'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          toast.success('Logged In Successfully!');
+          setTimeout(() => {
+            navigate('/');
+          }, 2000);
+        } else {
+          toast.error(data.error || 'Something Went Wrong');
+        }
+      } catch (error) {
+        toast.error('Failed to connect to the server');
+      }
     }
   };
 
@@ -124,6 +146,7 @@ function Login() {
             name="email"
             onChange={handleInputChange}
           />
+          {errors.email && <p className="error-text">{errors.email}</p>}
           <br/> <br/>
           <p>Enter Password:</p>
           <input 
@@ -133,6 +156,7 @@ function Login() {
             name="password"
             onChange={handleInputChange}
           />
+          {errors.password && <p className="error-text">{errors.password}</p>}
           <br/> <br/>
           <div className="login-button">
             <button type="submit" onClick={handleSubmit}>Login</button>

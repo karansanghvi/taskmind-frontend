@@ -100,6 +100,9 @@ function Signup() {
   // handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log('Form data before submission: ', formData);
+
     if (validate()) {
       try {
         const response = await fetch('http://localhost:5000/api/signup', {
@@ -112,6 +115,8 @@ function Signup() {
 
         const data = await response.json();
 
+        console.log('Response from server: ', data);
+
         if (response.ok) {
           toast.success('Account Created Successfully!');
           setTimeout(() => {
@@ -122,6 +127,7 @@ function Signup() {
         }
       } catch (error) {
         toast.error('Failed to connect to the server');
+        console.log('Error:', error);
       }
     }
   };
@@ -157,6 +163,7 @@ function Signup() {
             value={formData.fullName}
             onChange={handleInputChange} 
           />
+          {errors.fullName && <p className="error-text">{errors.fullName}</p>}
           <br/> <br/>
           <p>Enter Email Address:</p>
           <input 
@@ -167,6 +174,7 @@ function Signup() {
             value={formData.email}
             onChange={handleInputChange}
           />
+          {errors.email && <p className="error-text">{errors.email}</p>}
           <br/> <br/>
           <p>Enter Password:</p>
           <input 
@@ -177,9 +185,10 @@ function Signup() {
             value={formData.password}
             onChange={handleInputChange}
           />
+          {errors.password && <p className="error-text">{errors.password}</p>}
           <br/> <br/>
           <div className="login-button">
-            <button type="submit" onClick={handleSubmit}>Login</button>
+            <button type="submit" onClick={handleSubmit}>Signup</button>
           </div>
           <br/> 
           <p className="text-center">Have an account? <span className="signup"><Link to="/login">Login</Link></span></p>

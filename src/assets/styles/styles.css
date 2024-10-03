@@ -204,6 +204,12 @@ nav {
     color: black;
 }
 
+.login-section .error-text {
+    font-size: 16px;
+    color: #4F75FF;
+    margin-top: 5px;
+}
+
 .login-section .login-button {
     background-color: #4F75FF;
     border-radius: 20px;
