@@ -3,14 +3,12 @@ import '../src/assets/styles/styles.css';
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Profile from "./pages/Profile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { UserProvider } from "./context/UserContext";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
     <>
-      <UserProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home/>} />
@@ -19,7 +17,6 @@ function App() {
             <Route path="/profile" element={<Profile/>} />
           </Routes>
         </BrowserRouter>
-      </UserProvider>
     </>
   );
 }

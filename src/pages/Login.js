@@ -5,12 +5,10 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../assets/styles/styles.css';  
 import Footer from "../components/Footer";
-import { useUser } from '../context/UserContext'; 
 
 function Login() {
   const navRef = useRef();
   const navigate = useNavigate();
-  const { setUser } = useUser(); 
 
   const [formData, setFormData] = useState({
     email: '',
@@ -104,21 +102,14 @@ function Login() {
         const data = await response.json();
   
         if (response.ok) {
-          // Store user details and set in context
+          localStorage.setItem('token', data.token);
           localStorage.setItem('fullName', data.fullName);
-          localStorage.setItem('email', data.email); // Store email if needed
-  
-          // Set user details in context
-          setUser({
-            fullName: data.fullName,
-            email: data.email,
-          });
+          localStorage.setItem('email', data.email); 
   
           toast.success('Logged In Successfully!');
           
-          // Redirect to the profile page after a short delay
           setTimeout(() => {
-            navigate('/profile');
+            navigate('/');
           }, 2000);
         } else {
           toast.error(data.error || 'Something Went Wrong');

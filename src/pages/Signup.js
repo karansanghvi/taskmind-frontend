@@ -6,12 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../assets/styles/styles.css';  
 import Footer from "../components/Footer";
 import axios from "axios";
-import { UserProvider, useUser } from '../context/UserContext'; 
 
 function Signup() {
   const navRef = useRef();
   const navigate = useNavigate();
-  const { setUser } = useUser(); 
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -114,15 +112,9 @@ function Signup() {
           password: formData.password 
         });
   
-        // Set user details in context
-        setUser({
-          fullName: formData.fullName,
-          email: formData.email,
-        });
-  
         toast.success('Account Created Successfully!');
         setTimeout(() => {
-          navigate('/profile');
+          navigate('/login');
         }, 2000);
       } catch (error) {
         console.error('Signup failed:', error);
@@ -132,73 +124,71 @@ function Signup() {
   };  
 
   return (
-    <UserProvider> 
-      <>
-        <header>
-          <h1 className="logo">TaskMind</h1>
-          <nav ref={navRef}>
-            <button onClick={scrollToHome} className="link">Home</button>
-            <button onClick={scrollToFeatures} className="link">Features</button>
-            <button>
-              <Link to="/login" className="login">Login</Link>
-            </button>
-            <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-              <FaTimes />
-            </button>
-          </nav>
-          <button className="nav-btn" onClick={showNavbar}>
-            <FaBars />
+    <>
+      <header>
+        <h1 className="logo">TaskMind</h1>
+        <nav ref={navRef}>
+          <button onClick={scrollToHome} className="link">Home</button>
+          <button onClick={scrollToFeatures} className="link">Features</button>
+          <button>
+            <Link to="/login" className="login">Login</Link>
           </button>
-        </header>
+          <button className="nav-btn nav-close-btn" onClick={showNavbar}>
+            <FaTimes />
+          </button>
+        </nav>
+        <button className="nav-btn" onClick={showNavbar}>
+          <FaBars />
+        </button>
+      </header>
 
-        <div className="login-page p-20">
-          <div className="login-section">
-            <h1>Create Account</h1>
-            <p>Enter Full Name:</p>
-            <input 
-              type="text" 
-              className="text-box" 
-              placeholder="John Doe"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleInputChange} 
-            />
-            {errors.fullName && <p className="error-text">{errors.fullName}</p>}
-            <br/> <br/>
-            <p>Enter Email Address:</p>
-            <input 
-              type="text" 
-              className="text-box" 
-              placeholder="john.doe@gmail.com" 
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-            />
-            {errors.email && <p className="error-text">{errors.email}</p>}
-            <br/> <br/>
-            <p>Enter Password:</p>
-            <input 
-              type="password" 
-              className="text-box" 
-              placeholder="********" 
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-            {errors.password && <p className="error-text">{errors.password}</p>}
-            <br/> <br/>
-            <div className="login-button">
-              <button type="submit" onClick={handleSubmit}>Signup</button>
-            </div>
-            <br/> 
-            <p className="text-center">Have an account? <span className="signup"><Link to="/login">Login</Link></span></p>
+      <div className="login-page p-20">
+        <div className="login-section">
+          <h1>Create Account</h1>
+          <p>Enter Full Name:</p>
+          <input 
+            type="text" 
+            className="text-box" 
+            placeholder="John Doe"
+            name="fullName"
+            value={formData.fullName}
+            onChange={handleInputChange} 
+          />
+          {errors.fullName && <p className="error-text">{errors.fullName}</p>}
+          <br/> <br/>
+          <p>Enter Email Address:</p>
+          <input 
+            type="text" 
+            className="text-box" 
+            placeholder="john.doe@gmail.com" 
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+          {errors.email && <p className="error-text">{errors.email}</p>}
+          <br/> <br/>
+          <p>Enter Password:</p>
+          <input 
+            type="password" 
+            className="text-box" 
+            placeholder="********" 
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+          {errors.password && <p className="error-text">{errors.password}</p>}
+          <br/> <br/>
+          <div className="login-button">
+            <button type="submit" onClick={handleSubmit}>Signup</button>
           </div>
+          <br/> 
+          <p className="text-center">Have an account? <span className="signup"><Link to="/login">Login</Link></span></p>
         </div>
+      </div>
 
-        <Footer />
-        <ToastContainer />
-      </>
-    </UserProvider>
+      <Footer />
+      <ToastContainer />
+    </>
   );
 }
 

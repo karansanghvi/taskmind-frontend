@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../assets/styles/styles.css';  
 import Features from "../components/Features";
 import HeroBanner from "../components/HeroBanner";
@@ -9,6 +9,9 @@ import Footer from "../components/Footer";
 function Home() {
 
   const navRef = useRef();
+  const navigate = useNavigate();
+  const [fullName, setFullName] = useState('');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
@@ -21,11 +24,22 @@ function Home() {
     }
   };
 
-  const fullName = localStorage.getItem('fullName');
+  useEffect(() => {
+    const storedFullName = localStorage.getItem('fullName');
+    if (storedFullName) {
+      setFullName(storedFullName);
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('fullName');
-  }
+    setFullName('');
+    navigate('/');
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(prevState => !prevState);
+  };
 
   return (
     <>
@@ -34,16 +48,23 @@ function Home() {
         <nav ref={navRef}>
           <button onClick={() => scrollToSection('home')} className="link">Home</button>
           <button onClick={() => scrollToSection('features')} className="link">Features</button>
-          {fullName ? (
-            <>
-              <span className="welcome-message">Welcome, {fullName}</span>
-              <button onClick={handleLogout} className="logout">Logout</button>
-            </>
-          ) : (
-            <button>
-              <Link to="/login" className="login">Login</Link>
-            </button>
-          )}
+          {
+            fullName ? (
+              <div className="dropdown">
+                <button onClick={toggleDropdown} className="login">{fullName}</button>
+                {dropdownOpen && (
+                  <div className="dropdown-content">
+                    <Link to="/profile" className="dropdown-item">Profile Page</Link>
+                    <button onClick={handleLogout} className="dropdown-item">Logout</button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button>
+                <Link to="/login" className="login">Login</Link>
+              </button>
+            )
+          }
           <button className="nav-btn nav-close-btn" onClick={showNavbar}>
             <FaTimes />
           </button>
