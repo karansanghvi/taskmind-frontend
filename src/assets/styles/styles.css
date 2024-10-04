@@ -234,6 +234,80 @@ nav {
     color: white;
 }
 
+/* sidebar */
+.sidebar {
+    background-color: #4F75FF;
+}
+
+.sidebar-main h1 {
+    font-size: 50px;
+}
+
+.sidebar-main .container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto; 
+    cursor: pointer;
+}
+
+/* dashboard */
+.dashboard-section .title {
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.dashboard-section .box {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0)), rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.dashboard-section h2 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.add-task-button {
+    background-color: #4F75FF;
+    color: white;
+}
+
+/* modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+}
+
 /* footer */
 .footer-section {
     background-color: #4F75FF;
