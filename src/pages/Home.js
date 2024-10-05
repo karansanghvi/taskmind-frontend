@@ -56,7 +56,7 @@ function Home() {
                   <div className="dropdown-content">
                     <Link to="/profile" className="dropdown-item">Profile</Link>
                     <Link to="/dashboard" className="dropdown-item">Dashboard</Link>
-                    <button onClick={handleLogout} className="dropdown-item">Logout</button>
+                    <button onClick={handleLogout}><p className="text-black">Logout</p></button>
                   </div>
                 )}
               </div>

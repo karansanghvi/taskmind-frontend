@@ -1,8 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../assets/styles/styles.css';
 import { Home as HomeIcon } from 'lucide-react';
+import axios from 'axios';
 
 function Home() {
+  const [tasks, setTasks] = useState([]);
+  const [completedTasks, setCompletedTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/tasks', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        const allTasks = response.data;
+        setTasks(allTasks.filter(task => !task.completed)); 
+        setCompletedTasks(allTasks.filter(task => task.completed)); 
+      } catch (error) {
+        console.error('Error fetching tasks: ', error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
   return (
     <>
       <div className='dashboard-section'>
@@ -16,6 +39,15 @@ function Home() {
             <div className='box'>
               <h2>Tasks</h2>
               <hr className='mt-4 mb-4' />
+              <ul>
+                {
+                  tasks.map(task => (
+                    <div className='dashboard-tasks'>
+                      <li key={task._id}>{task.title}</li>
+                    </div>
+                  ))
+                }
+              </ul>
             </div>
             <br/>
             <div className='box'>
@@ -32,6 +64,15 @@ function Home() {
             <div className='box'>
               <h2>Completed Tasks</h2>
               <hr className='mt-4 mb-4' />
+              <ul>
+                {
+                  completedTasks.map(task => (
+                    <div className='dashboard-tasks'>
+                      <li key={task._id}>{task.title}</li>
+                    </div>
+                  ))
+                }
+              </ul>
             </div>
           </div>
         </div>
@@ -40,4 +81,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Home;
