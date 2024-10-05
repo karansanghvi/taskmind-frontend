@@ -156,6 +156,7 @@ function Tasks() {
                     className='task-delete-btn'
                   />
                 </div>
+                <br/>
               </li>
             ))
           }
