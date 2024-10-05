@@ -30,7 +30,7 @@ function Features() {
 
         <div className='features-card'>
             <h1 className='card-title'>Task Dependency Management</h1>
-            <p className='card-description'>he app allows users to create dependencies between tasks (i.e., Task B cannot start until Task A is completed). This ensures that users follow a logical flow in their task execution.</p>
+            <p className='card-description'>The app allows users to create dependencies between tasks (i.e., Task B cannot start until Task A is completed). This ensures that users follow a logical flow in their task execution.</p>
         </div>
     </div>
     </>
