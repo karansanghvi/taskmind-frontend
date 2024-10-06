@@ -232,6 +232,64 @@ nav {
 /* profile page */
 .profile-section {
     color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    margin: 100px;
+}
+
+.profile-section .profile-title {
+    font-size: 60px;
+    font-weight: 700;
+}
+
+.profile-section .profile-text {
+    padding: 10px;
+    border-radius: 5px;
+    width: 480px;
+    color: black;
+    background-color: rgb(169, 168, 168);
+}
+
+.button-container {
+    display: flex;            
+    justify-content: center; 
+    align-items: center;
+    gap: 10px;               
+}
+  
+.cancel-profile,
+.save-profile {
+    padding: 10px 20px;    
+    cursor: pointer;         
+    border: none;           
+    border-radius: 5px;   
+    font-size: 20px;
+    font-weight: 700;  
+}
+
+.cancel-profile {
+    background-color: black;
+    color: white;              
+}
+  
+.save-profile {
+    background-color: #4F75FF; 
+    color: white;     
+    margin-left: 20px;         
+}
+
+.profile-section .edit-profile {
+    background-color: #4F75FF;
+    padding: 10px;
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    margin-left: 500px;
+    margin-right: 500px;
+    border-radius: 10px;
 }
 
 /* sidebar */
