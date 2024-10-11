@@ -473,7 +473,19 @@ input::placeholder {
     display: flex;
     align-items: center; 
 }
-  
+
+.get-suggestions-btn {
+    background-color: black;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 20px;
+}
+
+.suggestions-box {
+    color: black;
+    font-size: 20px;
+    margin-top: 20px;
+}
   
 /* modal */
 .modal-overlay {

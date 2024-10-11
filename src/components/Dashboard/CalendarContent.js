@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
+import '../../assets/styles/styles.css';
 
 function Calendar() {
   return (
-    <div>
-      calendar content
-    </div>
+    <>
+     <div className='dashboard-section'>
+     </div> 
+    </>
   )
 }
 
