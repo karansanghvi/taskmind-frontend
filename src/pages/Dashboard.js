@@ -13,6 +13,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const [activeContent, setActiveContent] = useState("Dashboard");
   const [fullName, setFullName] = useState('');
+  const [tasksUpdated, setTasksUpdated] = useState(false); // State to trigger re-fetch of tasks for Calendar
 
   useEffect(() => {
     const storedFullName = localStorage.getItem('fullName');
@@ -21,23 +22,29 @@ function Dashboard() {
     }
   }, []);
 
+  // Function to be passed to TasksContent to trigger Calendar refresh
+  const handleTaskAdded = () => {
+    setTasksUpdated(true);
+  };
+
+  // Render the selected content
   const renderContent = () => {
     switch (activeContent) {
       case "Home":
         navigate('/');
         break;
       case "Dashboard":
-        return <HomeContent/>;
+        return <HomeContent />;
       case "Tasks":
-        return <TasksContent/>;
+        return <TasksContent onTaskAdded={handleTaskAdded} />; // Pass the task update handler to TasksContent
       case "Notes":
-        return <NotesContent/>;
+        return <NotesContent />;
       case "Calendar":
-        return <CalendarContent/>;
+        return <CalendarContent tasksUpdated={tasksUpdated} setTasksUpdated={setTasksUpdated} />; // Pass task update state to Calendar
       case "Settings":
-        return <SettingsContent/>;
+        return <SettingsContent />;
       case "Help":
-        return <HelpContent/>;
+        return <HelpContent />;
       default:
         return <h2 className="text-white">Welcome</h2>;
     }
@@ -45,60 +52,60 @@ function Dashboard() {
 
   return (
     <>
-    <div className="flex">
-      <Sidebar>
-        <SidebarItem 
-          icon={<Home size={20} />} 
-          text="Home" 
-          active={activeContent === "Home"} 
-          onClick={() => setActiveContent("Home")}  
-        />
-        <SidebarItem 
-          icon={<LayoutDashboard size={20} />} 
-          text="Dashboard" 
-          active={activeContent === "Dashboard"} 
-          onClick={() => setActiveContent("Dashboard")}  
-        />
-        <SidebarItem 
-          icon={<Layers size={20} />} 
-          text="Tasks" 
-          active={activeContent === "Tasks"} 
-          onClick={() => setActiveContent("Tasks")}  
-        />
-        <SidebarItem 
-          icon={<StickyNote size={20} />} 
-          text="Notes" 
-          active={activeContent === "Notes"} 
-          onClick={() => setActiveContent("Notes")}  
-        />
-        <SidebarItem 
-          icon={<Calendar size={20} />} 
-          text="Calendar" 
-          active={activeContent === "Calendar"} 
-          onClick={() => setActiveContent("Calendar")}  
-        />
-        <hr className="my-3" />
-        <SidebarItem 
-          icon={<Settings size={20} />} 
-          text="Settings" 
-          active={activeContent === "Settings"} 
-          onClick={() => setActiveContent("Settings")}  
-        />
-        <SidebarItem 
-          icon={<LifeBuoy size={20} />} 
-          text="Help" 
-          active={activeContent === "Help"} 
-          onClick={() => setActiveContent("Help")} 
-        />
-      </Sidebar>
+      <div className="flex">
+        <Sidebar>
+          <SidebarItem 
+            icon={<Home size={20} />} 
+            text="Home" 
+            active={activeContent === "Home"} 
+            onClick={() => setActiveContent("Home")}  
+          />
+          <SidebarItem 
+            icon={<LayoutDashboard size={20} />} 
+            text="Dashboard" 
+            active={activeContent === "Dashboard"} 
+            onClick={() => setActiveContent("Dashboard")}  
+          />
+          <SidebarItem 
+            icon={<Layers size={20} />} 
+            text="Tasks" 
+            active={activeContent === "Tasks"} 
+            onClick={() => setActiveContent("Tasks")}  
+          />
+          <SidebarItem 
+            icon={<StickyNote size={20} />} 
+            text="Notes" 
+            active={activeContent === "Notes"} 
+            onClick={() => setActiveContent("Notes")}  
+          />
+          <SidebarItem 
+            icon={<Calendar size={20} />} 
+            text="Calendar" 
+            active={activeContent === "Calendar"} 
+            onClick={() => setActiveContent("Calendar")}  
+          />
+          <hr className="my-3" />
+          <SidebarItem 
+            icon={<Settings size={20} />} 
+            text="Settings" 
+            active={activeContent === "Settings"} 
+            onClick={() => setActiveContent("Settings")}  
+          />
+          <SidebarItem 
+            icon={<LifeBuoy size={20} />} 
+            text="Help" 
+            active={activeContent === "Help"} 
+            onClick={() => setActiveContent("Help")} 
+          />
+        </Sidebar>
 
-      <div className="flex-grow p-6 sidebar-main">
-        <h1 className="font-bold text-white">👋 Welcome, {fullName}</h1>
-        <div className="container">
-          {renderContent()}
+        <div className="flex-grow p-6 sidebar-main">
+          <h1 className="font-bold text-white">👋 Welcome, {fullName}</h1>
+          <div className="container">
+            {renderContent()}
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 }

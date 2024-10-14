@@ -4,10 +4,12 @@ import { Layers as LayersIcon } from 'lucide-react';
 import TaskModal from '../Dashboard/TaskModal';
 import { AiFillDelete } from "react-icons/ai";
 
-function Tasks() {
+function Tasks({ onTaskAdded }) {  // onTaskAdded is passed from the parent component
   const [tasks, setTasks] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [taskTitle, setTaskTitle] = useState("");
+  const [taskDate, setTaskDate] = useState("");
+  const [taskTime, setTaskTime] = useState("");
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(null);
 
   const fetchTasks = async () => {
@@ -21,34 +23,43 @@ function Tasks() {
     setTasks(data);
   }
 
-  // load tasks when it mounts
+  // Load tasks when the component mounts
   useEffect(() => {
     fetchTasks();
   }, []);
 
-  // add new task
+  // Add a new task
   const addTask = async () => {
     const token = localStorage.getItem('token');
+    const deadline = taskDate && taskTime ? new Date(`${taskDate}T${taskTime}`) : null;
     const response = await fetch('http://localhost:5000/api/tasks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ title: taskTitle }),
+      body: JSON.stringify({ 
+        title: taskTitle,
+        deadline
+      }),
     });
     const newTask = await response.json();
     setTasks((prevTasks) => [...prevTasks, newTask]);
     setTaskTitle("");
+    setTaskDate("");
+    setTaskTime("");
     setModalOpen(false);
+
+    // Trigger calendar refresh after a task is added
+    onTaskAdded();
   }
 
-  // toggle task completion with radio button
+  // Toggle task completion with radio button
   const handleTaskSelection = async (index) => { 
     const selectedTask = tasks[index];
     const updatedCompletionStatus = !selectedTask.completed;
 
-    // update task status in backend
+    // Update task status in the backend
     await fetch(`http://localhost:5000/api/tasks/${selectedTask._id}`, {
       method: 'PATCH',
       headers: {
@@ -66,10 +77,9 @@ function Tasks() {
     setSelectedTaskIndex(index);  
   };
 
-  // delete a task
+  // Delete a task
   const deleteTask = async (index) => {
     const taskId = tasks[index]._id;
-    console.log('Deleting task with ID:', taskId);
     await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
       method: 'DELETE',
     });
@@ -102,6 +112,22 @@ function Tasks() {
                 className='add-textBox'
               />
               <br/> <br/>
+              <p className='enter-title'>Enter Deadline Date:</p>
+              <input
+                type="date"
+                value={taskDate}
+                onChange={(e) => setTaskDate(e.target.value)}
+                className='add-textBox'
+              />
+              <br/> <br/>
+              <p className='enter-title'>Enter Deadline Time:</p>
+              <input
+                type="time"
+                value={taskTime}
+                onChange={(e) => setTaskTime(e.target.value)}
+                className='add-textBox'
+              />
+              <br/> <br/>
               <div className="btn-container">
                 <button onClick={() => setModalOpen(false)} className='cancel-task-button'>Cancel</button>
                 <button onClick={addTask} className='add-task-button'>Add Task</button>
@@ -122,6 +148,9 @@ function Tasks() {
                     ></div>
                     <span className='ml-4'>
                       <h2>{task.title}</h2>
+                      {task.deadline && (
+                        <p className='text-black'>Due by: {new Date(task.deadline).toLocaleString()}</p>  
+                      )}
                     </span>
                   </div>
                   <AiFillDelete
@@ -149,12 +178,11 @@ function Tasks() {
                   <div className='flex items-center'>
                     <span className='ml-4'>
                       <h2 className='line-through'>{task.title}</h2>
+                      {task.deadline && (
+                        <p className='line-through'>Due by: {new Date(task.deadline).toLocaleString()}</p>  
+                      )}
                     </span>
                   </div>
-                  <AiFillDelete
-                    onClick={() => deleteTask(index)} 
-                    className='task-delete-btn'
-                  />
                 </div>
                 <br/>
               </li>
